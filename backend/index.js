@@ -36,6 +36,21 @@ app.post('/mangas', async (req,res)=>{
         res.status(500).send({message: err.message});
     }
 })
+//Get all Manga
+app.get('/mangas', async (req,res)=>{
+    try{
+        const mangas = await Manga.find({}); // empty object to get all the data
+
+        return res.status(200).json({
+            count: mangas.length,
+            data: mangas
+        });
+    }
+    catch (err){
+        console.log(err);
+        res.status(500).send({message: err.message});
+    }
+})
 
 mongoose.connect(mongoDBURL)
 .then(()=>{
