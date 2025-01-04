@@ -36,7 +36,7 @@ app.post('/mangas', async (req,res)=>{
         res.status(500).send({message: err.message});
     }
 })
-//Get all Manga
+//Get all Mangas
 app.get('/mangas', async (req,res)=>{
     try{
         const mangas = await Manga.find({}); // empty object to get all the data
@@ -52,6 +52,24 @@ app.get('/mangas', async (req,res)=>{
     }
 })
 
+//Get manga by id
+app.get('/mangas/:id', async (req,res)=>{ // :id get id
+    try{
+        const { id } = req.params;
+        const mangas = await Manga.findById(id); //find id
+
+        return res.status(200).json({
+            count: mangas.length,
+            data: mangas
+        });
+    }
+    catch (err){
+        console.log(err);
+        res.status(500).send({message: err.message});
+    }
+})
+
+//Connect to mongoDB
 mongoose.connect(mongoDBURL)
 .then(()=>{
     console.log("Connected to MongoDB");
