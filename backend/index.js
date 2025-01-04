@@ -69,7 +69,7 @@ app.get('/mangas/:id', async (req,res)=>{ // :id get id
     }
 })
 
-//Update a Book
+//Update a Manga
 app.put('/mangas/:id', async (req,res)=>{
     try{
         if ( //check if the data sent have all 3 fields
@@ -91,6 +91,21 @@ app.put('/mangas/:id', async (req,res)=>{
     } catch (err) {
         console.log(err);
         res.status(500).send({message: err.message});
+    }
+})
+
+//Delete a Manga
+app.delete('/mangas/:id', async (req,res)=>{
+    try{
+        const { id } = req.params;
+        const result = await Manga.findByIdAndDelete(id); //delete the manga with this id
+        if (!result){ //if id not found
+            return res.status(404).json({message: 'Manga not found'});
+        }
+        return res.status(200).json({message: 'Manga deleted successfully'});
+    } catch (err){
+        console.log(err);
+        return res.status(500).send({message: err.message});
     }
 })
 
