@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { Manga } from '../models/mangaModel.js'
 const router = express.Router();
 
