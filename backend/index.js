@@ -69,6 +69,31 @@ app.get('/mangas/:id', async (req,res)=>{ // :id get id
     }
 })
 
+//Update a Book
+app.put('/mangas/:id', async (req,res)=>{
+    try{
+        if ( //check if the data sent have all 3 fields
+        !req.body.title || 
+        !req.body.author || 
+        !req.body.publishYear
+        ) {
+        return res.status(400).send({message: "All fields are required"});
+        }
+        const { id } = req.params;
+        const result = await Manga.findByIdAndUpdate(id,req.body); //update the body of the database
+
+        if (!result){ //if id not found
+            res.status(500).json({message: 'Manga not found'});
+        }
+        return res.status(200).send({message: 'Manga updated succesfully'});
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({message: err.message});
+    }
+})
+
 //Connect to mongoDB
 mongoose.connect(mongoDBURL)
 .then(()=>{
