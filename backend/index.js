@@ -10,13 +10,14 @@ const app = express();
 // Middleware for parsing request body
 app.use(express.json());
 // Cross-Origin Resource Sharing
-app.use(cors({
-    origin: ["http://localhost:3000"], // allow requests from this url
-    methods: ["GET","POST","PUT","DELETE"],
-    allowedHeaders: ["Content-Type"],
+// app.use(cors({
+//     origin: ["http://localhost:3000"], // allow requests from this url
+//     methods: ["GET","POST","PUT","DELETE"],
+//     allowedHeaders: ["Content-Type"],
     
   
-}));
+// }));
+app.use(cors());
 app.get("/",(req,res)=>{
     res.send("Hello World!");
 });
