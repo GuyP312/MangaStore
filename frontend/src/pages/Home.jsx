@@ -23,13 +23,13 @@ const Home = () => {
   return (
     <div className='p-4'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3x1 my-8'>Mangas List</h1>
+        <h1 className='text-3xl my-8'>Mangas List</h1>
         <Link to='/mangas/create'>
           <MdOutlineAddBox className='text-sky-800 text-4x1' />
         </Link>
       </div>
       {loading ? (<Spinner />) : (
-        <table className='w-full border-seperate border-spacing-2'>
+        <table className='w-full border-separate border-spacing-2'>
           <thead>
             <tr>
               <th className='border border-slate-600 rounded-md'>No</th>
@@ -40,7 +40,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {mangas.map((manga, index) => {
+            {mangas.map((manga, index) => (
               <tr key={manga._id} className='h-8'>
                 <td className='border border-slate-700 rounded-md text-center'>{index + 1}</td>
                 <td className='border border-slate-700 rounded-md text-center'>{manga.title}</td>
@@ -49,18 +49,18 @@ const Home = () => {
                 <td className='border border-slate-700 rounded-md text-center'>
                   <div className='flex justify-center gap-x-4'>
                     <Link to={`/mangas/details/${manga._id}`}>
-                      <BsInfoCircle className='text-2x1 text-green-800' />
+                      <BsInfoCircle className='text-2xl text-green-800' />
                     </Link>
                     <Link to={`/mangas/edit/${manga._id}`}>
-                      <AiOutlineEdit className='text-2x1 text-yellow-600' />
+                      <AiOutlineEdit className='text-2xl text-yellow-600' />
                     </Link>
                     <Link to={`/mangas/delete/${manga._id}`}>
-                      <MdOutlineDelete className='text-2x1 text-red-600' />
+                      <MdOutlineDelete className='text-2xl text-red-600' />
                     </Link>
                   </div>
                 </td>
               </tr>
-            })}
+            ))}
           </tbody>
 
         </table>)}
