@@ -17,7 +17,7 @@ const createMangas = () => {
       publishYear,
     }
     setLoading(true);
-    axios.post('http://localhost:5555/mangas', data) //sent post request to backend therefore update to mongoDB
+    axios.post('http://localhost:5555/mangas', data) //sent post request to backend therefore update mongoDB
     .then(()=>{
       setLoading(false);
       navigate('/');
