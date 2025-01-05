@@ -32,7 +32,7 @@ const Home = () => {
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl my-8'>Mangas List</h1>
         <Link to='/mangas/create'>
-          <MdOutlineAddBox className='text-sky-800 text-4x1' />
+          <MdOutlineAddBox className='text-sky-800 text-4xl' />
         </Link>
       </div>
       {loading ? (<Spinner />) : ( showType ==='table' ?

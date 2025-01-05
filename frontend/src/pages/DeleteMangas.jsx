@@ -3,20 +3,24 @@ import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const DeleteMangas = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
   const handleDeleteManga = () => {
     setLoading(true);
     axios.delete(`http://localhost:5555/mangas/${id}`)
      .then((res) => {
         setLoading(false);
+        enqueueSnackbar('Manga deleted successfully', { variant:'success' });
         navigate('/');
       })
      .catch((err) => {
-        console.error(err);
+        //console.error(err);
+        enqueueSnackbar('Error', { variant:'error' });
         setLoading(false);
       });
   }

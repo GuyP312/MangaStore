@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate , useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
+import { useSnackbar } from 'notistack';
 
 const EditMangas = () => {
   const [title, setTitle] = useState('');
@@ -11,6 +12,7 @@ const EditMangas = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(()=>{
     setLoading(true);
     axios.get(`http://localhost:5555/mangas/${id}`)
@@ -34,11 +36,13 @@ const EditMangas = () => {
     axios.put(`http://localhost:5555/mangas/${id}`, data) //sent post request to backend therefore update to mongoDB
     .then(()=>{
       setLoading(false);
+      enqueueSnackbar('Manga editted successfully', { variant:'success' });
       navigate('/');
     })
     .catch((err)=>{
       setLoading(false);
-      alert('Failed to create manga, please check console');
+      //alert('Failed to create manga, please check console');
+      enqueueSnackbar('Error', { variant:'error' });
       console.log(err);
     })
   };
