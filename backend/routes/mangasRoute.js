@@ -10,14 +10,18 @@ router.post('/', async (req,res)=>{
         if ( //check if the data sent have all 3 fields
             !req.body.title || 
             !req.body.author || 
-            !req.body.publishYear
+            !req.body.publishYear ||
+            !req.body.description ||
+            !req.body.rating 
         ) {
             return res.status(400).send({message: "All fields are required"});
         }
         const newManga = {  // make variable to assign the data sent
             title: req.body.title,
             author: req.body.author,
-            publishYear: req.body.publishYear
+            publishYear: req.body.publishYear,
+            description: req.body.description,
+            rating: req.body.rating
         };
 
         const manga = await Manga.create(newManga); // send the data to mongodb 
@@ -67,7 +71,9 @@ router.put('/:id', async (req,res)=>{
         if ( //check if the data sent have all 3 fields
         !req.body.title || 
         !req.body.author || 
-        !req.body.publishYear
+        !req.body.publishYear ||
+        !req.body.description ||
+        !req.body.rating 
         ) {
         return res.status(400).send({message: "All fields are required"});
         }
