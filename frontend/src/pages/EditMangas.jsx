@@ -9,6 +9,8 @@ const EditMangas = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publishYear, setPublishYear] = useState('');
+  const [description, setDescription] = useState('');
+  const [rating, setRating] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -20,6 +22,8 @@ const EditMangas = () => {
       setTitle(res.data.data.title);
       setAuthor(res.data.data.author);
       setPublishYear(res.data.data.publishYear);
+      setDescription(res.data.data.description);
+      setRating(res.data.data.rating);
       setLoading(false);
     })
    .catch((err)=>{
@@ -31,6 +35,8 @@ const EditMangas = () => {
       title,
       author,
       publishYear,
+      description,
+      rating
     }
     setLoading(true);
     axios.put(`http://localhost:5555/mangas/${id}`, data) //sent post request to backend therefore update to mongoDB
@@ -64,6 +70,14 @@ const EditMangas = () => {
         <div className = 'my-4'>
           <label className = 'text-xl mr-4 text-gray-500'>Publish Year</label>
           <input type ='text' value = {publishYear} onChange={(e)=>setPublishYear(e.target.value)} className = 'border-2 border-gray-500 px-4 py-2 w-full' />
+        </div>
+        <div className = 'my-4'>
+          <label className = 'text-xl mr-4 text-gray-500'>Description</label>
+          <textarea value = {description} onChange={(e)=>setDescription(e.target.value)} className = 'border-2 border-gray-500 px-4 py-2 w-full' />
+        </div>
+        <div className = 'my-4'>
+          <label className = 'text-xl mr-4 text-gray-500'>Rating</label>
+          <input type ='number' min="0" max="5" step="1" value = {rating} onChange={(e)=>setRating(e.target.value)} className = 'border-2 border-gray-500 px-4 py-2 w-full' />
         </div>
         <button className = 'p-2 bg-sky-300 m-8' onClick = {handleEditManga}>Save</button>
       </div>
