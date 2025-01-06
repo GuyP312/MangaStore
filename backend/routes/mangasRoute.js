@@ -1,18 +1,41 @@
 import express from 'express';
+import multer from 'multer'; //use for uploading photo
+import { v4 as uuidv4 } from 'uuid'; //generate random id
 import { Manga } from '../models/mangaModel.js'
+import path from 'path';
 const router = express.Router();
 
+const storage = multer.diskStorage({ 
+    destination: function (req,file,cb){ //upload photo destination to images directory
+        cb(null,'images'); 
+    },
+    filename: function(req,file,cb){
+        cb(null,uuidv4()+'-'+Date.now()+ path.extname(file.originalname)); 
+    }
+})
+
+const fileFilter = (req,file,cb) => { //filter the file type 
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+let upload = multer({ storage, fileFilter });
 
 
 // Save a new manga
-router.post('/', async (req,res)=>{
+router.post('/',upload.single('picture'), async (req,res)=>{
     try{
         if ( //check if the data sent have all 3 fields
             !req.body.title || 
             !req.body.author || 
             !req.body.publishYear ||
             !req.body.description ||
-            !req.body.rating 
+            !req.body.rating ||
+            !req.file
         ) {
             return res.status(400).send({message: "All fields are required"});
         }
@@ -21,7 +44,8 @@ router.post('/', async (req,res)=>{
             author: req.body.author,
             publishYear: req.body.publishYear,
             description: req.body.description,
-            rating: req.body.rating
+            rating: req.body.rating,
+            picture: req.file.path
         };
 
         const manga = await Manga.create(newManga); // send the data to mongodb 
@@ -73,7 +97,8 @@ router.put('/:id', async (req,res)=>{
         !req.body.author || 
         !req.body.publishYear ||
         !req.body.description ||
-        !req.body.rating 
+        !req.body.rating ||
+        !req.file
         ) {
         return res.status(400).send({message: "All fields are required"});
         }

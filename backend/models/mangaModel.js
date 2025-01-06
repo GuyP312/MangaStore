@@ -21,6 +21,10 @@ const mangaSchema = mongoose.Schema(
         rating:{
             type: Number,
             required: true
+        },
+        picture:{
+            type: String,
+            required: true
         }
     },
     {

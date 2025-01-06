@@ -11,19 +11,21 @@ const createMangas = () => {
   const [publishYear, setPublishYear] = useState('');
   const [description, setDescription] = useState('');
   const [rating, setRating] = useState('');
+  const [picture, setPicture] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const handleSaveManga = () =>{
-    const data = {
-      title,
-      author,
-      publishYear,
-      description,
-      rating
-    }
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('author', author);
+    formData.append('publishYear', publishYear);
+    formData.append('description', description);
+    formData.append('rating', rating);
+    formData.append('picture', picture);
+
     setLoading(true);
-    axios.post('http://localhost:5555/mangas', data) //sent post request to backend therefore update mongoDB
+    axios.post('http://localhost:5555/mangas', formData) //sent post request to backend therefore update mongoDB
     .then(()=>{
       setLoading(false);
       enqueueSnackbar('Manga created successfully', { variant:'success' });
@@ -62,6 +64,10 @@ const createMangas = () => {
         <div className = 'my-4'>
           <label className = 'text-xl mr-4 text-gray-500'>Rating</label>
           <input type ='number' min="0" max="5" step="1" value = {rating} onChange={(e)=>setRating(e.target.value)} className = 'border-2 border-gray-500 px-4 py-2 w-full' />
+        </div>
+        <div className = 'my-4'>
+          <label className = 'text-xl mr-4 text-gray-500'>Picture</label>
+          <input type ='file' accept='.png, .jpg, .jpeg' name = "picture" onChange={(e)=>setPicture(e.target.files[0])} className = 'border-2 border-gray-500 px-4 py-2 w-full' />
         </div>
         <button className = 'p-2 bg-sky-300 m-8' onClick = {handleSaveManga}>Save</button>
       </div>
