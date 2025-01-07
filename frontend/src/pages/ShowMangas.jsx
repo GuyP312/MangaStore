@@ -87,6 +87,10 @@ const ShowMangas = () => {
               <span className = 'text-xl mr-4 text-gray-500'>Description</span>
               <span>{manga.description}</span>
             </div>
+            <div className = 'my-4'>
+              <span className = 'text-xl mr-4 text-gray-500'>Images</span>
+              <img src = {`http://localhost:5555/${manga.picture}`} className = 'w-64 h-64 w-full h-full object-contain' alt = "Manga Cover" /> 
+            </div>
           </div>
       )}
     </div>

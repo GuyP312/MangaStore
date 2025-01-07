@@ -1,5 +1,5 @@
 import express from 'express';
-import multer from 'multer'; //use for uploading photo
+import multer from 'multer'; //use for uploading photo through formData
 import { v4 as uuidv4 } from 'uuid'; //generate random id
 import { Manga } from '../models/mangaModel.js'
 import path from 'path';

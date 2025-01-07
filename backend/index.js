@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import { Manga } from "./models/mangaModel.js";
 import mangasRoute from './routes/mangasRoute.js';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import multer from 'multer'; //use for uploading photo through formData
 
 const app = express();
 
@@ -24,6 +27,11 @@ app.get("/",(req,res)=>{
 
 // Routes
 app.use('/mangas', mangasRoute); // any url after /mangas will be used inside this route
+
+// Images Routes
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/images',express.static(path.join(__dirname, 'images'))); // make the images available at localhost:PORT/images/imagesname.ext
 
 //Connect to mongoDB
 mongoose.connect(mongoDBURL)
