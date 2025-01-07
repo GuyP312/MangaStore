@@ -89,7 +89,7 @@ const ShowMangas = () => {
             </div>
             <div className = 'my-4'>
               <span className = 'text-xl mr-4 text-gray-500'>Images</span>
-              <img src = {`http://localhost:5555/${manga.picture}`} className = 'w-64 h-64 w-full h-full object-contain' alt = "Manga Cover" /> 
+              <img src = {`http://localhost:5555/${manga.picture}`} className = 'w-64 h-64 scale-75' alt = "No image" /> 
             </div>
           </div>
       )}

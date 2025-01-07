@@ -90,20 +90,23 @@ router.get('/:id', async (req,res)=>{ // :id get id
 })
 
 //Update a Manga
-router.put('/:id', async (req,res)=>{
+router.put('/:id',upload.single('picture'), async (req,res)=>{
     try{
         if ( //check if the data sent have all 3 fields
         !req.body.title || 
         !req.body.author || 
         !req.body.publishYear ||
         !req.body.description ||
-        !req.body.rating ||
-        !req.file
+        !req.body.rating
         ) {
         return res.status(400).send({message: "All fields are required"});
         }
         const { id } = req.params;
-        const result = await Manga.findByIdAndUpdate(id,req.body); //update the body of the database
+        const updateData = { ...req.body };
+        if (req.file) { 
+            updateData.picture = req.file.path; ///update the file path
+          }
+        const result = await Manga.findByIdAndUpdate(id,updateData,{ new: true }); //update the body of the database
 
         if (!result){ //if id not found
             res.status(500).json({message: 'Manga not found'});
