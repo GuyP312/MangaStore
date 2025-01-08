@@ -5,8 +5,13 @@ import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from'react-icons/bs';
 import { MdOutlineAddBox, MdOutlineDelete } from'react-icons/md';
+import { useState } from 'react'
+import { BiShow } from 'react-icons/bi';
+import MangaModal from './MangaModal';
 
 const MangaSingleCard = ({mangas}) => {
+    const [showModal, setShowModal] = useState(false);
+
   return (
     <div
     key = {mangas._id}
@@ -22,6 +27,7 @@ const MangaSingleCard = ({mangas}) => {
             <h2 className='my-1'>{mangas.author}</h2>
         </div>
         <div className = 'flex justify-between items-center gap-x-2 mt-4 p-4'>
+            <BiShow className = 'text-3xl text-blue-800 hover:text-black cursor-pointer' onClick = {()=> setShowModal(true)}/>
             <Link to={`/mangas/details/${mangas._id}`}>
                 <BsInfoCircle className='text-2xl text-green-800 hover:text-black' />
             </Link>
@@ -32,6 +38,7 @@ const MangaSingleCard = ({mangas}) => {
                 <MdOutlineDelete className='text-2xl text-red-600 hover:text-black'/>
             </Link>
         </div>
+        {showModal && (<MangaModal mangas={mangas} onClose={() => setShowModal(false)} /> )}
     </div>
   )
 }
