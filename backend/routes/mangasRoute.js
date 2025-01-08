@@ -9,12 +9,12 @@ const storage = multer.diskStorage({
     destination: function (req,file,cb){ //upload photo destination to images directory
         cb(null,'images'); 
     },
-    filename: function(req,file,cb){
-        cb(null,uuidv4()+'-'+Date.now()+ path.extname(file.originalname)); 
+    filename: function(req,file,cb){ // the file name that will be upload to images directory
+        cb(null,uuidv4()+'-'+Date.now()+ path.extname(file.originalname)); // random id + datetime + original file extension
     }
 })
 
-const fileFilter = (req,file,cb) => { //filter the file type 
+const fileFilter = (req,file,cb) => { //filter the file type to only take jpeg jpg and png
     const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if(allowedFileTypes.includes(file.mimetype)) {
         cb(null, true);
@@ -23,13 +23,13 @@ const fileFilter = (req,file,cb) => { //filter the file type
     }
 }
 
-let upload = multer({ storage, fileFilter });
+let upload = multer({ storage, fileFilter }); // put it into variable upload --> into this storage with this file filter
 
 
 // Save a new manga
-router.post('/',upload.single('picture'), async (req,res)=>{
+router.post('/',upload.single('picture'), async (req,res)=>{ // upload.single(picture) for uploading picture through formData
     try{
-        if ( //check if the data sent have all 3 fields
+        if ( //check if the data sent have all the field required
             !req.body.title || 
             !req.body.author || 
             !req.body.publishYear ||
@@ -48,7 +48,7 @@ router.post('/',upload.single('picture'), async (req,res)=>{
             picture: req.file.path
         };
 
-        const manga = await Manga.create(newManga); // send the data to mongodb 
+        const manga = await Manga.create(newManga); // send the data to Manga model created in another file
         return res.status(201).send(manga);
 
     } catch(err){
@@ -75,7 +75,7 @@ router.get('/', async (req,res)=>{
 //Get manga by id
 router.get('/:id', async (req,res)=>{ // :id get id
     try{
-        const { id } = req.params;
+        const { id } = req.params; 
         const mangas = await Manga.findById(id); //find id
 
         return res.status(200).json({
@@ -90,9 +90,9 @@ router.get('/:id', async (req,res)=>{ // :id get id
 })
 
 //Update a Manga
-router.put('/:id',upload.single('picture'), async (req,res)=>{
+router.put('/:id',upload.single('picture'), async (req,res)=>{ 
     try{
-        if ( //check if the data sent have all 3 fields
+        if ( //check if the data sent have all the field required
         !req.body.title || 
         !req.body.author || 
         !req.body.publishYear ||

@@ -12,11 +12,11 @@ const DeleteMangas = () => {
   const { enqueueSnackbar } = useSnackbar();
   const handleDeleteManga = () => {
     setLoading(true);
-    axios.delete(`http://localhost:5555/mangas/${id}`)
+    axios.delete(`http://localhost:5555/mangas/${id}`) // sent delete request to the api
      .then((res) => {
         setLoading(false);
         enqueueSnackbar('Manga deleted successfully', { variant:'success' });
-        navigate('/');
+        navigate('/'); // navigate back to homepage
       })
      .catch((err) => {
         //console.error(err);

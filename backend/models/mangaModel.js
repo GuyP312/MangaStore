@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"; //mongoose is package to create schema / connect to mongoDB 
 
-const mangaSchema = mongoose.Schema(
+const mangaSchema = mongoose.Schema( // assign that the data in the model will have this specified field
     {
         title:{
             type: String,

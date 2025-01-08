@@ -19,7 +19,7 @@ const EditMangas = () => {
   useEffect(()=>{
     setLoading(true);
     axios.get(`http://localhost:5555/mangas/${id}`)
-    .then((res)=>{
+    .then((res)=>{ //set old value so user can see the value when they are about to edit
       setTitle(res.data.data.title);
       setAuthor(res.data.data.author);
       setPublishYear(res.data.data.publishYear);

@@ -6,11 +6,11 @@ import ShowMangas from './pages/ShowMangas';
 import DeleteMangas from './pages/DeleteMangas';
 import EditMangas from './pages/EditMangas';
 
-export default function App(){
+export default function App(){ // route the url to each respective react component
   return (
     <>
       <Routes>
-        <Route path = '/' element={< Home /> } />
+        <Route path = '/' element={< Home /> } /> 
         <Route path = '/mangas/create' element={< CreateMangas />} />
         <Route path = '/mangas/details/:id' element={< ShowMangas />} />
         <Route path = '/mangas/edit/:id' element={< EditMangas />} />
