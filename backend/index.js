@@ -3,6 +3,7 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Manga } from "./models/mangaModel.js";
 import mangasRoute from './routes/mangasRoute.js';
+import authRoute from './routes/authRoutes.js';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,6 +28,7 @@ app.get("/",(req,res)=>{
 
 // Routes
 app.use('/mangas', mangasRoute); // any url after /mangas will be used inside this route
+app.use('/api/auth', authRoute); // create auth route for login/logout 
 
 // Images Routes
 const __filename = fileURLToPath(import.meta.url);
