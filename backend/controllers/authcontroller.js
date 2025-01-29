@@ -1,21 +1,22 @@
 import express, { response } from "express";
 import { User } from "../models/usermodel.js";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcrypt";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 export const signup = async (req,res) =>{
     const {username,email,password} = req.body;
 
     try{
-        if (!username || !email || password){
+        if (!username || !email || !password){
             throw new Error("All fields are required");
         }
     
-    const userAlreadyExists = await User.findOne({email});
+    const userAlreadyExists = await User.findOne({ email });
     if(userAlreadyExists){
         return res.status(400).json({message:"User already exists"});
     }
 
-    const hashedPassword = await bcryptjs.hash(password,10); //change the password to become random letter, not readable
+    const hashedPassword = await bcrypt.hash(password,10); //change the password to become random letter, not readable
     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
     const user = new User({
@@ -30,12 +31,15 @@ export const signup = async (req,res) =>{
 
     // jwt
     generateTokenAndSetCookie(res, user._id);
-
-
-
+    res.status(201).json({sucess:true,
+        message: "User created successfully", 
+        user: {
+            ...user._doc,
+            password: undefined
+        }});
     }
-    catch(Error){
-        return res.status(400).json({message:error.message});
+    catch(err){
+        return res.status(400).json({message:err.message});
     }
 }
 
